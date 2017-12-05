@@ -1,13 +1,13 @@
 package worddb
 
-
 class WordDB {
 
-    static def db = createWordDB()
+    def db = createWordDB()
 
     static def createWordDB() {
+
         def db = [:]
-        new File("src/main/resources/wordList.txt").eachLine {
+        getClass().getResource("/wordList.txt").eachLine {
             db.putIfAbsent(it.length(), [])
             db[it.length()].add(it)
         }
@@ -15,7 +15,7 @@ class WordDB {
     }
 
     def countWordsWithLength() {
-        map.collectEntries { key, value ->
+        db.collectEntries { key, value ->
             [(key): value.size()]
         }
     }
