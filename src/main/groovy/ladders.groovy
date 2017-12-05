@@ -1,7 +1,8 @@
-import worddb.WordDB
-
 db = new WordDB()
 
-println db.countWordsWithLength()
+println db.countWordsForLength()
 
-println "screen is valid: ${db.isWordValid('screen')}"
+println Utils.countChars('test')
+
+println new Anagram(db).find('guaacmole')
+

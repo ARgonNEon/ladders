@@ -1,11 +1,11 @@
-package worddb
+import static Utils.*
 
 class WordDB {
 
     def db = createWordDB()
+    def charcount = createCharCountDB(db)
 
     static def createWordDB() {
-
         def db = [:]
         getClass().getResource("/wordList.txt").eachLine {
             db.putIfAbsent(it.length(), [])
@@ -14,7 +14,15 @@ class WordDB {
         db
     }
 
-    def countWordsWithLength() {
+    static def createCharCountDB(worddb) {
+        worddb.collectEntries {key, value ->
+            [(key): value.collectEntries {
+                [(it): countChars(it)]
+            }]
+        }
+    }
+
+    def countWordsForLength() {
         db.collectEntries { key, value ->
             [(key): value.size()]
         }
@@ -25,4 +33,13 @@ class WordDB {
             it == word
         }
     }
+
+    def getWordListForLength(int len) {
+        db[len]
+    }
+
+    def getCharcountDBForLength(int len) {
+        charcount[len]
+    }
+
 }
