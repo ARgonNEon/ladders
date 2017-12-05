@@ -20,4 +20,9 @@ class WordDB {
         }
     }
 
+    def isWordValid(word) {
+        db[word.length()].any {
+            it == word
+        }
+    }
 }
