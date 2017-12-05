@@ -2,7 +2,6 @@ db = new WordDB()
 
 println db.countWordsForLength()
 
-println Utils.countChars('test')
+println new Anagram(db).find('mglauaeco')
 
-println new Anagram(db).find('guaacmole')
-
+println db.isCharListValid(Utils.countChars('guacamole'))

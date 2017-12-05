@@ -28,9 +28,16 @@ class WordDB {
         }
     }
 
-    def isWordValid(word) {
+    def isWordValid(String word) {
         db[word.length()].any {
             it == word
+        }
+    }
+
+    def isCharListValid(l) {
+        def len = l.inject(0) {val, it -> val + it.value}
+        charcount[len].any {key, value ->
+            value.equals(l)
         }
     }
 
