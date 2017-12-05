@@ -3,3 +3,5 @@ out
 .gradle
 ladders.iml
 build
+gradlew.bat
+gradle
