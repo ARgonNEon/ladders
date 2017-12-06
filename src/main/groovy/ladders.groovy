@@ -1,3 +1,3 @@
 def ladders = new Ladders()
 
-ladders.ladders("croissant", "baritone").each {println it}
+ladders.ladders(args[0], args[1]).each {println it}

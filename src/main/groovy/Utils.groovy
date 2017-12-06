@@ -9,10 +9,6 @@ class Utils {
         charcount
     }
 
-    static def removeOneLetterString(String s) {
-        removeOneLetter(countChars(s))
-    }
-
     static def removeOneLetter(Map m) {
         m.collect {key, value ->
             def word = m.findAll {it.key != key}.collectEntries {it}
@@ -21,10 +17,6 @@ class Utils {
             }
             word
         }
-    }
-
-    static def addEachLetterString(String s) {
-        addEachLetter(countChars(s))
     }
 
     static def addEachLetter(Map m) {

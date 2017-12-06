@@ -2,51 +2,55 @@ import static Utils.*
 
 class WordDB {
 
-    def db = createWordDB()
-    def charcount = createCharCountDB(db)
+    def db = []
+    def charcount = [:]
+    def tree = [:]
 
-    static def createWordDB() {
-        def db = [:]
-        getClass().getResource("/wordList.txt").eachLine {
-            db.putIfAbsent(it.length(), [])
-            db[it.length()].add(it)
+    WordDB() {
+        getClass().getResource("/wordList.txt").eachLine {db << it}
+        charcount = db.collectEntries {
+            [(it): countChars(it)]
         }
-        db
-    }
 
-    static def createCharCountDB(worddb) {
-        worddb.collectEntries {key, value ->
-            [(key): value.collectEntries {
-                [(it): countChars(it)]
-            }]
-        }
-    }
-
-    def countWordsForLength() {
-        db.collectEntries { key, value ->
-            [(key): value.size()]
+        charcount.each {word, cc ->
+            def subtree = tree
+            ('a'..'z').each {
+                subtree.putIfAbsent(cc.getOrDefault(it, 0), it=='z'?[]:[:])
+                subtree = subtree.get(cc.getOrDefault(it, 0))
+            }
+            subtree.add(word)
         }
     }
 
     def isWordValid(String word) {
-        db[word.length()].any {
+        db.any {
             it == word
         }
     }
 
-    def isCharListValid(l) {
-        def len = l.inject(0) {val, it -> val + it.value}
-        charcount[len].any {key, value ->
-            value.equals(l)
+    def isCharListValid(Map m) {
+        def st = tree
+        ('a'..'z').every {
+            if (!st.containsKey(m.getOrDefault(it, 0))) return false
+            st = st[m.getOrDefault(it, 0)]
         }
+    }
+
+    def find(Map m) {
+        def st = tree
+        if (('a'..'z').every {
+            if (!st.containsKey(m.getOrDefault(it, 0))) return false
+            st = st[m.getOrDefault(it, 0)]
+        })
+        st else []
     }
 
     def getWordListForLength(int len) {
         db[len]
     }
 
-    def getCharcountDBForLength(int len) {
-        charcount[len]
+    def getCharcountDB() {
+        charcount
     }
 
 }

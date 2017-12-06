@@ -3,7 +3,6 @@ import static Utils.*
 class Ladders {
 
     WordDB db = new WordDB()
-    Anagram anagram = new Anagram(db)
 
     def ladders(String start, String end) {
         def startList = countChars(start)
@@ -16,14 +15,14 @@ class Ladders {
                 {
                     db.isCharListValid(it)
                 }).drop(1).reverse().drop(1).collect {
-            anagram.find(it)[0]
+            db.find(it)[0]
         }
         l.add(0, start)
         l.add(end)
         l
     }
 
-    def breadthFirstSearch(start, goal, actions, validityCheck) {
+    def static breadthFirstSearch(start, goal, actions, validityCheck) {
         def frontier = [start]
         def explored = []
         def meta = [:]
