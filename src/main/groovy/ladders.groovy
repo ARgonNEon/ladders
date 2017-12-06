@@ -1,4 +1,4 @@
 
 def ladders = new Ladders()
 
-println ladders.ladders("croissant", "baritone")
+ladders.ladders("croissant", "baritone").each {println it}

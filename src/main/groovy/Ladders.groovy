@@ -15,7 +15,9 @@ class Ladders {
         },
                 {
                     db.isCharListValid(it)
-                })
+                }).reverse().collect {
+            anagram.find(it)[0]
+        }
     }
 
     def breadthFirstSearch(start, goal, actions, validityCheck) {
