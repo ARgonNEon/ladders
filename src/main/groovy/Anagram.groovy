@@ -8,11 +8,15 @@ class Anagram {
         this.db = db
     }
 
-    def find(String word) {
-        word = word.toLowerCase()
-        def charcount = countChars(word)
+    def findString(String word) {
+        return find(countChars(word))
+    }
+
+    def find(word) {
+        def charcount = word
         def e1 = charcount.entrySet().first()
-        def m = db.getCharcountDBForLength(word.size()).findAll {
+        def len = word.inject(0) {val, it -> val + it.value}
+        def m = db.getCharcountDBForLength(len).findAll {
             it.value.equals(charcount)
         }
         m.collect{it.key}
