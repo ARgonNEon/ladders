@@ -8,16 +8,19 @@ class Ladders {
     def ladders(String start, String end) {
         def startList = countChars(start)
         def goalList = countChars(end)
-        breadthFirstSearch(startList, goalList, {
+        def l = breadthFirstSearch(startList, goalList, {
             def actions = addEachLetter(it)
             actions.addAll(removeOneLetter(it))
             actions
         },
                 {
                     db.isCharListValid(it)
-                }).reverse().collect {
+                }).drop(1).reverse().drop(1).collect {
             anagram.find(it)[0]
         }
+        l.add(0, start)
+        l.add(end)
+        l
     }
 
     def breadthFirstSearch(start, goal, actions, validityCheck) {
@@ -36,6 +39,7 @@ class Ladders {
                     path.add(s)
                     s = meta[s]
                 }
+                path.add(start)
                 return path
             }
 
