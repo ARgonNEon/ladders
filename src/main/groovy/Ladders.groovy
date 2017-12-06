@@ -9,8 +9,8 @@ class Ladders {
         def startList = countChars(start)
         def goalList = countChars(end)
         breadthFirstSearch(startList, goalList, {
-            def actions = removeOneLetter(it)
-            actions.addAll(addEachLetter(it))
+            def actions = addEachLetter(it)
+            actions.addAll(removeOneLetter(it))
             actions
         },
                 {
@@ -26,7 +26,7 @@ class Ladders {
         def meta = [:]
 
         while (!frontier.empty) {
-            def node = frontier.pop()
+            def node = frontier.remove(0)
             explored.add(node)
 
             if (node == goal) {
@@ -45,8 +45,6 @@ class Ladders {
                 meta[child] = node
                 frontier.add(child)
             }
-
-            if (explored.size() % 1000 == 0) println explored.size()
         }
         return []
     }
