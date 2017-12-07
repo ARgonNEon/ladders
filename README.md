@@ -9,6 +9,7 @@ gradle assemble
 The jar is created in build/libs
 
 ## Usage
+```
 java -jar ladders.jar croissant baritone
-
+```
 
