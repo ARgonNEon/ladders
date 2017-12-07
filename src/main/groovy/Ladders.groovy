@@ -5,9 +5,12 @@ class Ladders {
     WordDB db = new WordDB()
 
     def ladders(String start, String end) {
-        def startList = countChars(start)
-        def goalList = countChars(end)
-        def l = breadthFirstSearch(startList, goalList, {
+        [start, end].each {
+            if (!db.isCharListValid(countChars(it))) {
+                println "$it is no valid word."
+                System.exit(1)} 
+            }
+        def l = breadthFirstSearch(countChars(start), countChars(end), {
             def actions = addEachLetter(it)
             actions.addAll(removeOneLetter(it))
             actions

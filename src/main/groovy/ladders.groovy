@@ -1,9 +1,14 @@
+def start = args[0]
+def goal = args[1]
+println "start word: $start"
+println "goal word: $goal"
+
 def ladders = new Ladders()
 println "Seach tree for word lookup created. Starting search..."
 println() 
 
 new File("output.txt").withWriter {w ->
-    ladders.ladders(args[0], args[1]).each {
+    ladders.ladders(start, goal).each {
     println it
     w << "$it\n"
 }}
