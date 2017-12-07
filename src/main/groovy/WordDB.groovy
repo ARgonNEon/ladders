@@ -3,12 +3,11 @@ import static Utils.*
 class WordDB {
 
     def db = []
-    def charcount = [:]
     def tree = [:]
 
     WordDB() {
         getClass().getResource("/wordList.txt").eachLine {db << it}
-        charcount = db.collectEntries {
+        def charcount = db.collectEntries {
             [(it): countChars(it)]
         }
 
@@ -22,35 +21,19 @@ class WordDB {
         }
     }
 
-    def isWordValid(String word) {
-        db.any {
-            it == word
-        }
-    }
-
     def isCharListValid(Map m) {
-        def st = tree
+        def subtree = tree
         ('a'..'z').every {
-            if (!st.containsKey(m.getOrDefault(it, 0))) return false
-            st = st[m.getOrDefault(it, 0)]
+            if (!subtree.containsKey(m.getOrDefault(it, 0))) return false
+            subtree = subtree[m.getOrDefault(it, 0)]
         }
     }
 
     def find(Map m) {
-        def st = tree
-        if (('a'..'z').every {
-            if (!st.containsKey(m.getOrDefault(it, 0))) return false
-            st = st[m.getOrDefault(it, 0)]
-        })
-        st else []
+        def subtree = tree
+        ('a'..'z').every {
+            if (!subtree.containsKey(m.getOrDefault(it, 0))) return false
+            subtree = subtree[m.getOrDefault(it, 0)]
+        } ? subtree : []
     }
-
-    def getWordListForLength(int len) {
-        db[len]
-    }
-
-    def getCharcountDB() {
-        charcount
-    }
-
 }
