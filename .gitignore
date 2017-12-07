@@ -5,3 +5,4 @@ ladders.iml
 build
 gradlew.bat
 gradle
+output.txt
