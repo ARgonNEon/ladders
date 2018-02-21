@@ -20,6 +20,14 @@ class Ladders {
                 }).drop(1).reverse().drop(1).collect {
             db.find(it)[0]
         }
+        if (l.empty) {
+            if (start == end) {
+                return [start]
+            } else {
+                println "No Solution!"
+                return []
+            }
+        }
         l.add(0, start)
         l.add(end)
         l
